@@ -5,4 +5,5 @@ export type TextNote = {
   posY: number;
   uuid: string;
   color: string;
+  backgroundColor: string;
 };

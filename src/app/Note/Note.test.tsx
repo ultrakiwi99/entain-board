@@ -9,7 +9,8 @@ describe('TextNote', () => {
     posX: 0,
     posY: 0,
     uuid: '12345',
-    color: 'red'
+    color: 'black',
+    backgroundColor: 'white'
   };
 
   it('renders with passed color', () =>{
@@ -18,6 +19,7 @@ describe('TextNote', () => {
     const note = screen.getByText(testNote.text);
 
     expect(note).not.toBeNull();
-    expect(note.style.backgroundColor).toBe(testNote.color);
+    expect(note.style.backgroundColor).toBe(testNote.backgroundColor);
+    expect(note.style.color).toBe(testNote.color);
   })
 });
