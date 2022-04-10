@@ -4,4 +4,5 @@ export type TextNote = {
   posX: number;
   posY: number;
   uuid: string;
+  color: string;
 };
