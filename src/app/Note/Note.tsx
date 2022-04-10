@@ -1,3 +1,5 @@
+import './Note.css';
+
 export const Note = ({text, posX, posY, color}: {text: string, posX: number, posY: number, color: string}) => {
   const noteStyle: React.CSSProperties = {
     position: 'absolute',
@@ -7,6 +9,6 @@ export const Note = ({text, posX, posY, color}: {text: string, posX: number, pos
   }
   
   return (
-    <div style={noteStyle}>{text}</div>
+    <div style={noteStyle} className='note'>{text}</div>
   );
 };
