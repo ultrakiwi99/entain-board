@@ -13,7 +13,8 @@ export const WhiteboardApp = () => {
       text: 'Empty note',
       posX,
       posY,
-      uuid: Math.floor(Math.random() * 10000).toString()
+      uuid: Math.floor(Math.random() * 10000).toString(),
+      color: 'red'
     }]))
   };
 

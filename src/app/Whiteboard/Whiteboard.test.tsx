@@ -11,13 +11,15 @@ describe('Whiteboard', () => {
     text: 'Text note 1',
     posX: 12,
     posY: 3,
-    uuid: crypto.randomUUID()
+    uuid: crypto.randomUUID(),
+    color: 'red'
   }, {
     userName: '',
     text: 'Text note 2',
     posX: 15,
     posY: 2,
-    uuid: crypto.randomUUID()
+    uuid: crypto.randomUUID(),
+    color: 'black'
   }];
 
   const renderWhiteBoard = () => render(<Whiteboard title={whiteboardTitle} name={userName} notes={notes} handleClick={() => {}}/>);

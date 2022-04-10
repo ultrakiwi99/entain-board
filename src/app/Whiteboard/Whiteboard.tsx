@@ -8,8 +8,10 @@ export const Whiteboard = ({title, name, notes, handleClick}: {title: string, na
     position: 'relative'
   }
 
-  const handleWhiteBoardClick = (event: MouseEvent) => {
-    handleClick(event.clientX, event.clientY);
+  const handleWhiteBoardClick = (event: any) => {      
+    if (event.target.id === 'whiteboard') {
+      handleClick(event.clientX, event.clientY);
+    }
   }
 
   return (
