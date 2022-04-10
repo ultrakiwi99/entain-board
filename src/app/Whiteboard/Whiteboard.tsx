@@ -20,13 +20,11 @@ export const Whiteboard = ({title, name, notes, handleClick}: {title: string, na
   }
 
   const handleWhiteBoardClick = (event: MouseEvent) => {
-    console.log(event.screenX, event.screenY);
-    
-    handleClick(event.screenX, event.screenY);
+    handleClick(event.clientX, event.clientY);
   }
 
   return (
-    <div data-testid="whiteboard" style={whiteboardStyle} onClick={(event: any) => handleWhiteBoardClick(event)}>
+    <div data-testid="whiteboard" style={whiteboardStyle} onClick={(event: any) => handleWhiteBoardClick(event)} id='whiteboard'>
       <h1>{title}</h1>
       <section>{name}</section>
       {notes.map((note: TextNote) => <Note {...note} key={note.uuid}/>)}

@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Whiteboard} from './app/Whiteboard';
+import { WhiteboardApp } from './app/WhiteboardApp';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Whiteboard />
+    <WhiteboardApp />
   </React.StrictMode>,
   document.getElementById('root')
 );
