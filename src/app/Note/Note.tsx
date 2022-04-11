@@ -9,10 +9,11 @@ type NoteProps = {
   userName: string,
   uuid: string,
   editMode: boolean,
-  handleClick: (uuid: string) => void
+  handleClick: (uuid: string) => void,
+  handleInput: (newText: string, uuid: string) => void
 };
 
-export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, editMode, handleClick}: NoteProps) => {
+export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, editMode, handleClick, handleInput}: NoteProps) => {
   const noteStyle: React.CSSProperties = {
     position: 'absolute',
     top: posY,
@@ -24,9 +25,7 @@ export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, 
   return (
     <div style={noteStyle} className='note' onClick={() => handleClick(uuid)}>
       <h2>{userName}</h2>
-      <div className='note-textarea'>
-        {editMode ? <textarea autoFocus={true} /> : text}
-      </div>
+      {editMode ? (<textarea autoFocus={true} onInput={(event: any)=> handleInput(event.target.value, uuid)} defaultValue={text} />) : text}
     </div>
   );
 };

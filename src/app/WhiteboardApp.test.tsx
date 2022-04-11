@@ -42,4 +42,30 @@ describe('WhiteboardApp', () => {
       expect(screen.getByRole('textbox')).not.toBeNull();
     });
   });
+
+  it('updates text on textarea input', async () => {
+    expect.hasAssertions();
+    
+    render(<WhiteboardApp />);
+
+    const whiteboard = screen.getByTestId('whiteboard');
+
+    fireEvent.click(whiteboard, new MouseEvent('click'))
+    
+    const note = screen.getByText('Empty note');
+
+    fireEvent.click(note, new MouseEvent('click'))
+
+    const noteTextarea = screen.getByRole('textbox');
+
+    fireEvent.click(noteTextarea, { target: { value: 'Test text' } })
+
+    await waitFor(() => {
+      expect(screen.getByRole('textbox')).not.toBeNull();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole('textbox').textContent).toMatch('Test text');
+    });
+  });
 });

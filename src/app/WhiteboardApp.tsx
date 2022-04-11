@@ -29,7 +29,16 @@ export const WhiteboardApp = () => {
     })]));
   }
 
+  const updateText = (newText: string, uuid: string) => {
+    setNotes((notes) => ([...notes.map((note) => {
+      if (note.uuid === uuid) {
+        note.text = newText;
+      }
+      return note;
+    })]));
+  }
+
   return (
-    <Whiteboard title={title} name={userName} notes={notes} handleClick={addNode} handleNoteClick={enableEdit} />
+    <Whiteboard title={title} name={userName} notes={notes} handleClick={addNode} handleNoteClick={enableEdit} handleTextInput={updateText}/>
   );
 }

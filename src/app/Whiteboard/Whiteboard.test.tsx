@@ -15,6 +15,7 @@ describe('Whiteboard', () => {
       notes={notes} 
       handleClick={() => {}} 
       handleNoteClick={() => {}}
+      handleTextInput={() => {}}
     />);
   const note = (text: string) => screen.getByText(text);
 
@@ -72,10 +73,18 @@ describe('Whiteboard', () => {
   it('sends cursor coordinates when clicked on', () => {
     expect.hasAssertions();
 
-    render(<Whiteboard title={whiteboardTitle} name={userName} notes={notes} handleNoteClick={() => {}} handleClick={(posX, posY) => {
-      expect(posX).toBe(0);
-      expect(posY).toBe(0);
-    }}/>);
+    render(
+      <Whiteboard 
+        title={whiteboardTitle} 
+        name={userName} 
+        notes={notes} 
+        handleNoteClick={() => {}} 
+        handleClick={(posX, posY) => {
+          expect(posX).toBe(0);
+          expect(posY).toBe(0);
+        }} 
+        handleTextInput={() => {}}/>
+    );
 
     const whiteboard = screen.getByTestId('whiteboard');
 
@@ -85,9 +94,17 @@ describe('Whiteboard', () => {
   it('sends note uid when note is clicked', async () => {
     expect.hasAssertions();
 
-    render(<Whiteboard title={whiteboardTitle} name={userName} notes={notes} handleClick={() => {}} handleNoteClick={(uuid: string) => {
-      expect(uuid).toBe(notes[0].uuid);
-    }}/>);
+    render(
+      <Whiteboard 
+        title={whiteboardTitle} 
+        name={userName} 
+        notes={notes} 
+        handleClick={() => {}} 
+        handleNoteClick={(uuid: string) => {
+          expect(uuid).toBe(notes[0].uuid);
+        }} 
+        handleTextInput={() => {}}/>
+    );
 
     const note = screen.getByText(notes[0].text);
 

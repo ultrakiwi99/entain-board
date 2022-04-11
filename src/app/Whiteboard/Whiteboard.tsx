@@ -8,10 +8,11 @@ type WhiteboardProps = {
   name: string, 
   notes: TextNote[], 
   handleClick: (posX: number, posY: number) => void,
-  handleNoteClick: (uuid: string) => void
+  handleNoteClick: (uuid: string) => void,
+  handleTextInput: (newText: string, uuid: string) => void
 };
 
-export const Whiteboard = ({title, name, notes, handleClick, handleNoteClick}: WhiteboardProps) => {
+export const Whiteboard = ({title, name, notes, handleClick, handleNoteClick, handleTextInput}: WhiteboardProps) => {
   const whiteboardStyle: React.CSSProperties = {
     position: 'relative'
   }
@@ -21,16 +22,18 @@ export const Whiteboard = ({title, name, notes, handleClick, handleNoteClick}: W
       handleClick(event.clientX, event.clientY);
       handleNoteClick('');
     }
-    if (event.target.className !== 'note-textarea') {
-      handleNoteClick('');
-    }
   }
 
   return (
     <div data-testid="whiteboard" style={whiteboardStyle} onClick={(event: any) => handleWhiteBoardClick(event)} id='whiteboard'>
       <h1>{title}</h1>
       <section>{name}</section>
-      {notes.map((note: TextNote) => <Note {...note} key={note.uuid} handleClick={handleNoteClick}/>)}
+      {notes.map((note: TextNote) => <Note 
+        {...note} 
+        key={note.uuid} 
+        handleClick={handleNoteClick} 
+        handleInput={handleTextInput}/>
+      )}
     </div>
   );
 }
