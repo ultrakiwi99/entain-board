@@ -6,4 +6,5 @@ export type TextNote = {
   uuid: string;
   color: string;
   backgroundColor: string;
+  editMode: boolean;
 };

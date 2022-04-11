@@ -17,11 +17,19 @@ export const WhiteboardApp = () => {
       posY,
       uuid: Math.floor(Math.random() * 10000).toString(),
       backgroundColor,
-      color
+      color,
+      editMode: false
     }]))
   };
 
+  const enableEdit = (uuid: string) => {
+    setNotes((notes) => ([...notes.map((note) => {
+      note.editMode = uuid === note.uuid;
+      return note;
+    })]));
+  }
+
   return (
-    <Whiteboard title={title} name={userName} notes={notes} handleClick={addNode} />
+    <Whiteboard title={title} name={userName} notes={notes} handleClick={addNode} handleNoteClick={enableEdit} />
   );
 }

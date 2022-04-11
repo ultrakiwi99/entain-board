@@ -6,33 +6,45 @@ import crypto from 'crypto';
 describe('Whiteboard', () => {
   const whiteboardTitle = 'Entain test whiteboard'
   const userName = 'Test user';
-  const notes: TextNote[] = [{
-    userName,
-    text: 'Text note 1',
-    posX: 12,
-    posY: 3,
-    uuid: crypto.randomUUID(),
-    color: 'black',
-    backgroundColor: 'white'
-  }, {
-    userName: '',
-    text: 'Text note 2',
-    posX: 15,
-    posY: 2,
-    uuid: crypto.randomUUID(),
-    color: 'black',
-    backgroundColor: 'white'
-  }];
+  let notes: TextNote[] = [];
 
-  const renderWhiteBoard = () => render(<Whiteboard title={whiteboardTitle} name={userName} notes={notes} handleClick={() => {}}/>);
-
-
+  const renderWhiteBoard = () => render(
+    <Whiteboard 
+      title={whiteboardTitle} 
+      name={userName} 
+      notes={notes} 
+      handleClick={() => {}} 
+      handleNoteClick={() => {}}
+    />);
   const note = (text: string) => screen.getByText(text);
+
+  beforeEach(() => {
+    notes = [{
+      userName,
+      text: 'Text note 1',
+      posX: 12,
+      posY: 3,
+      uuid: crypto.randomUUID(),
+      color: 'black',
+      backgroundColor: 'white',
+      editMode: false
+    }, {
+      userName: '',
+      text: 'Text note 2',
+      posX: 15,
+      posY: 2,
+      uuid: crypto.randomUUID(),
+      color: 'black',
+      backgroundColor: 'white',
+      editMode: false
+    }];
+  });
+
 
   it('renders and shows title text and current user name and has relative position', async () => {
     renderWhiteBoard();
     expect(await screen.findByText(whiteboardTitle)).not.toBeNull();
-    expect(await screen.findByText(userName)).not.toBeNull();
+    expect(await screen.findAllByText(userName)).not.toBeNull();
     expect(screen.getByTestId('whiteboard').style.position).toBe('relative');
   })
 
@@ -60,7 +72,7 @@ describe('Whiteboard', () => {
   it('sends cursor coordinates when clicked on', () => {
     expect.hasAssertions();
 
-    render(<Whiteboard title={whiteboardTitle} name={userName} notes={notes} handleClick={(posX, posY) => {
+    render(<Whiteboard title={whiteboardTitle} name={userName} notes={notes} handleNoteClick={() => {}} handleClick={(posX, posY) => {
       expect(posX).toBe(0);
       expect(posY).toBe(0);
     }}/>);
@@ -68,5 +80,17 @@ describe('Whiteboard', () => {
     const whiteboard = screen.getByTestId('whiteboard');
 
     fireEvent.click(whiteboard, new MouseEvent('click'))
+  });
+
+  it('sends note uid when note is clicked', async () => {
+    expect.hasAssertions();
+
+    render(<Whiteboard title={whiteboardTitle} name={userName} notes={notes} handleClick={() => {}} handleNoteClick={(uuid: string) => {
+      expect(uuid).toBe(notes[0].uuid);
+    }}/>);
+
+    const note = screen.getByText(notes[0].text);
+
+    fireEvent.click(note, new MouseEvent('click'))
   });
 });

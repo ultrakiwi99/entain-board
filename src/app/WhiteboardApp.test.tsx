@@ -20,4 +20,26 @@ describe('WhiteboardApp', () => {
       expect(screen.getByText('Empty note')).not.toBeNull();
     });
   });
+
+  it('enables edit mode on clicked note and disables on other notes', async () => {
+    expect.hasAssertions();
+    
+    render(<WhiteboardApp />);
+
+    const whiteboard = screen.getByTestId('whiteboard');
+
+    fireEvent.click(whiteboard, new MouseEvent('click'))
+
+    await waitFor(() => {
+      expect(screen.getByText('Empty note')).not.toBeNull();
+    });
+
+    const note = screen.getByText('Empty note');
+
+    fireEvent.click(note, new MouseEvent('click'))
+
+    await waitFor(() => {
+      expect(screen.getByRole('textbox')).not.toBeNull();
+    });
+  });
 });
