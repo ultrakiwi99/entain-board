@@ -22,6 +22,9 @@ export const Whiteboard = ({title, name, notes, handleClick, handleNoteClick}: W
       handleClick(event.clientX, event.clientY);
       handleNoteClick('');
     }
+    if (event.target.className !== 'note-textarea') {
+      handleNoteClick('');
+    }
   }
 
   return (

@@ -24,7 +24,9 @@ export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, 
   return (
     <div style={noteStyle} className='note' onClick={() => handleClick(uuid)}>
       <h2>{userName}</h2>
-        {editMode ? <textarea/> : text}
+      <div className='note-textarea'>
+        {editMode ? <textarea autoFocus={true} /> : text}
+      </div>
     </div>
   );
 };
