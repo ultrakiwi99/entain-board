@@ -1,4 +1,3 @@
-import { type } from '@testing-library/user-event/dist/types/setup/directApi';
 import React from 'react';
 import { TextNote } from '../models';
 import { Note } from '../Note/Note';
