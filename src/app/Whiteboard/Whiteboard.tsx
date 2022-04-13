@@ -2,7 +2,7 @@ import React from 'react';
 import { TextNote } from '../models';
 import { Note } from '../Note/Note';
 import './Whiteboard.css';
-import {center} from "../utils/center";
+import {center} from "../Utils/center";
 
 type WhiteboardProps = {
   title: string,

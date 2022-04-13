@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextNote } from './models';
-import { randomColor } from './utils/randomColor';
+import { randomColor } from './Utils/randomColor';
 import { Whiteboard } from './Whiteboard/Whiteboard';
 
 export const WhiteboardApp = () => {

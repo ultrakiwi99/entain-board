@@ -1,6 +1,6 @@
 import './Note.css';
-import {center} from "../utils/center";
-import React, {useState} from "react";
+import {center} from "../Utils/center";
+import React from "react";
 
 type NoteProps = {
   text: string,
