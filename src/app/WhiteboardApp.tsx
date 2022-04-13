@@ -38,7 +38,25 @@ export const WhiteboardApp = () => {
     })]));
   }
 
+  const handleUpdatePosition = (posX: number, posY: number, uuid: string) => {
+    setNotes((notes) => ([...notes.map((note) => {
+      if (note.uuid === uuid) {
+        note.posX = posX;
+        note.posY = posY;
+      }
+      return note;
+    })]));
+  }
+
   return (
-    <Whiteboard title={title} name={userName} notes={notes} handleClick={addNode} handleNoteClick={enableEdit} handleTextInput={updateText}/>
+    <Whiteboard
+      title={title}
+      name={userName}
+      notes={notes}
+      handleClick={addNode}
+      handleNoteClick={enableEdit}
+      handleTextInput={updateText}
+      handleUpdatePosition={handleUpdatePosition}
+    />
   );
 }

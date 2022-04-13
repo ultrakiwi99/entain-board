@@ -9,13 +9,14 @@ describe('Whiteboard', () => {
   let notes: TextNote[] = [];
 
   const renderWhiteBoard = () => render(
-    <Whiteboard 
-      title={whiteboardTitle} 
-      name={userName} 
-      notes={notes} 
-      handleClick={() => {}} 
+    <Whiteboard
+      title={whiteboardTitle}
+      name={userName}
+      notes={notes}
+      handleClick={() => {}}
       handleNoteClick={() => {}}
       handleTextInput={() => {}}
+      handleUpdatePosition={() => {}}
     />);
   const note = (text: string) => screen.getByText(text);
 
@@ -50,14 +51,14 @@ describe('Whiteboard', () => {
   })
 
   it('renders supplied notes text', async () => {
-    renderWhiteBoard();    
+    renderWhiteBoard();
     expect(note(notes[0].text)).not.toBeNull();
     expect(note(notes[1].text)).not.toBeNull();
   });
 
   it('renders supplied notes with postion absolute and appropriate distance from top left corner', async () => {
     renderWhiteBoard();
-    
+
     const firstNote = note(notes[0].text);
     const secondNote = note(notes[1].text);
 
@@ -74,15 +75,16 @@ describe('Whiteboard', () => {
     expect.hasAssertions();
 
     render(
-      <Whiteboard 
-        title={whiteboardTitle} 
-        name={userName} 
-        notes={notes} 
-        handleNoteClick={() => {}} 
+      <Whiteboard
+        title={whiteboardTitle}
+        name={userName}
+        notes={notes}
+        handleNoteClick={() => {}}
         handleClick={(posX, posY) => {
           expect(posX).toBe(0);
           expect(posY).toBe(0);
-        }} 
+        }}
+        handleUpdatePosition={() => {}}
         handleTextInput={() => {}}/>
     );
 
@@ -95,14 +97,15 @@ describe('Whiteboard', () => {
     expect.hasAssertions();
 
     render(
-      <Whiteboard 
-        title={whiteboardTitle} 
-        name={userName} 
-        notes={notes} 
-        handleClick={() => {}} 
+      <Whiteboard
+        title={whiteboardTitle}
+        name={userName}
+        notes={notes}
+        handleClick={() => {}}
         handleNoteClick={(uuid: string) => {
           expect(uuid).toBe(notes[0].uuid);
-        }} 
+        }}
+        handleUpdatePosition={() => {}}
         handleTextInput={() => {}}/>
     );
 

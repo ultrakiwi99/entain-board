@@ -15,7 +15,7 @@ describe('TextNote', () => {
   };
 
   it('renders with passed color', () =>{
-    render(<Note {...testNote} handleClick={() => {}} handleInput={() => {}}/>);
+    render(<Note {...testNote} handleClick={() => {}} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
 
     const note = screen.getByText(testNote.text);
 
@@ -26,14 +26,14 @@ describe('TextNote', () => {
 
 
   it('renders with username and text when edit mode is off', () =>{
-    render(<Note {...testNote} handleClick={() => {}} handleInput={() => {}}/>);
+    render(<Note {...testNote} handleClick={() => {}} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
 
     expect(screen.getByText(testNote.userName)).not.toBeNull();
     expect(screen.getByText(testNote.text)).not.toBeNull();
   })
 
   it('renders with username and textarea when edit mode is on', () =>{
-    render(<Note {...{...testNote, editMode: true}} handleClick={() => {}} handleInput={() => {}}/>);
+    render(<Note {...{...testNote, editMode: true}} handleClick={() => {}} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
 
     expect(screen.getByText(testNote.userName)).not.toBeNull();
     expect(screen.getByRole('textbox')).not.toBeNull();
@@ -42,10 +42,10 @@ describe('TextNote', () => {
 
   it('passes note id on click', () => {
     expect.hasAssertions();
-   
+
     render(<Note {...testNote} handleClick={(uid: string) => {
       expect(uid).toBe(testNote.uuid);
-    }} handleInput={() => {}}/>);
+    }} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
 
     const note = screen.getByText(testNote.text);
 
@@ -58,7 +58,7 @@ describe('TextNote', () => {
     render(<Note {...{...testNote, editMode: true}} handleClick={() => {}} handleInput={(newText: string, uuid: string) => {
       expect(newText).toBe('Test text');
       expect(uuid).toBe(testNote.uuid);
-    }}/>);
+    }} handleUpdatePosition={() => {}}/>);
 
     const noteTextBox = screen.getByRole('textbox');
 
