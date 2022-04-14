@@ -22,14 +22,7 @@ export const WhiteboardApp = () => {
     }]))
   };
 
-  const enableEdit = (uuid: string) => {
-    setNotes((notes) => ([...notes.map((note) => {
-      note.editMode = uuid === note.uuid;
-      return note;
-    })]));
-  }
-
-  const updateText = (newText: string, uuid: string) => {
+  const updateText = (uuid: string, newText: string) => {
     setNotes((notes) => ([...notes.map((note) => {
       if (note.uuid === uuid) {
         note.text = newText;
@@ -38,7 +31,7 @@ export const WhiteboardApp = () => {
     })]));
   }
 
-  const handleUpdatePosition = (posX: number, posY: number, uuid: string) => {
+  const updatePosition = (posX: number, posY: number, uuid: string) => {
     setNotes((notes) => ([...notes.map((note) => {
       if (note.uuid === uuid) {
         note.posX = posX;
@@ -54,9 +47,8 @@ export const WhiteboardApp = () => {
       name={userName}
       notes={notes}
       handleClick={addNode}
-      handleNoteClick={enableEdit}
-      handleTextInput={updateText}
-      handleUpdatePosition={handleUpdatePosition}
+      handleUpdatePosition={updatePosition}
+      handleTextUpdate={updateText}
     />
   );
 }

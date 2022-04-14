@@ -35,7 +35,7 @@ export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, 
     setNoteText(newText);
   }
 
-  const handleDisabeEditMode = () => {
+  const handleDisableEditMode = () => {
     setEditMode(false);
     handleUpdateText(uuid, noteText);
   }
@@ -47,9 +47,9 @@ export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, 
         ? (
           <Fragment>
             <textarea defaultValue={noteText} onInput={(event: any) => handleInput(event.target.value)}/>
-            <button onClick={() => setEditMode(false)}>Save</button>
+            <button onClick={() => handleDisableEditMode()}>Save</button>
           </Fragment>
-        ) : (<div className="note-text" onClick={handleDisabeEditMode}>{noteText}</div>)}
+        ) : (<div className="note-text" onClick={() => setEditMode(true)}>{noteText}</div>)}
     </div>
   );
 };
