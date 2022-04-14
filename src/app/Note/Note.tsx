@@ -1,6 +1,6 @@
 import './Note.css';
 import {center} from "../Utils/center";
-import React from "react";
+import React, {Fragment} from "react";
 
 type NoteProps = {
   text: string,
@@ -24,8 +24,7 @@ export const Note = ({ userName,
                        backgroundColor,
                        uuid,
                        editMode,
-                       handleClick,
-                       handleInput,
+                       handleTextUpdate,
                        handleUpdatePosition
                      }: NoteProps) => {
   const noteStyle: React.CSSProperties = {
@@ -49,8 +48,12 @@ export const Note = ({ userName,
       onDragEnd={handleMove}
       onClick={() => handleClick(uuid)}>
       <h2>{userName}</h2>
-      {editMode ? (<textarea autoFocus={true} onInput={(event: any) => handleInput(event.target.value, uuid)}
-                             defaultValue={text}/>) : text}
+      {editMode ? (
+        <Fragment>
+          <textarea autoFocus={true} onInput={(event: any) => handleInput(event.target.value, uuid)} defaultValue={text}/>
+          <button onClick={}>Save</button>
+        </Fragment>
+      ) : text}
     </div>
   );
 };
