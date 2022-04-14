@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import { TextNote } from '../models';
 import { Note } from './Note';
 
@@ -15,9 +15,9 @@ describe('TextNote', () => {
   };
 
   it('renders with passed color', () =>{
-    render(<Note {...testNote} handleClick={() => {}} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
+    render(<Note {...testNote} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
 
-    const note = screen.getByText(testNote.text);
+    const note = screen.getByTestId('note');
 
     expect(note).not.toBeNull();
     expect(note.style.backgroundColor).toBe(testNote.backgroundColor);
@@ -26,42 +26,56 @@ describe('TextNote', () => {
 
 
   it('renders with username and text when edit mode is off', () =>{
-    render(<Note {...testNote} handleClick={() => {}} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
+    render(<Note {...testNote} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
 
     expect(screen.getByText(testNote.userName)).not.toBeNull();
     expect(screen.getByText(testNote.text)).not.toBeNull();
   })
 
-  it('renders with username and textarea when edit mode is on', () =>{
-    render(<Note {...{...testNote, editMode: true}} handleClick={() => {}} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
+  it('renders textarea input when clicked on text container', async () => {
+    render(<Note {...testNote} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
 
-    expect(screen.getByText(testNote.userName)).not.toBeNull();
-    expect(screen.getByRole('textbox')).not.toBeNull();
-  })
+    const textContainer = screen.getByText(testNote.text);
 
+    fireEvent.click(textContainer);
 
-  it('passes note id on click', () => {
-    expect.hasAssertions();
+    await waitFor(() => expect(screen.getByRole('textbox')).not.toBeNull());
+    await waitFor(() => expect(screen.getByRole('button')).not.toBeNull());
+  });
 
-    render(<Note {...testNote} handleClick={(uid: string) => {
-      expect(uid).toBe(testNote.uuid);
-    }} handleInput={() => {}} handleUpdatePosition={() => {}}/>);
+  it('disables edit mode and updates text in card', async () => {
+    render(<Note {...testNote} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
 
-    const note = screen.getByText(testNote.text);
+    const textContainer = screen.getByText(testNote.text);
 
-    fireEvent.click(note, new MouseEvent('click'));
-  })
+    fireEvent.click(textContainer);
 
-  it('passes new note text on iput', () => {
-    expect.hasAssertions();
+    await waitFor(async () => {
+      const textInput = screen.getByRole('textbox');
+      fireEvent.input(textInput, { target: {value: 'Some very new text'}});
+      fireEvent.click(screen.getByRole('button'));
 
-    render(<Note {...{...testNote, editMode: true}} handleClick={() => {}} handleInput={(newText: string, uuid: string) => {
-      expect(newText).toBe('Test text');
+      await waitFor(() => {
+        const textContainer = screen.getByText('Some very new text');
+        expect(textContainer).not.toBeNull();
+      });
+    });
+  });
+
+  it('disables edit mode and calls handler with new text', async () => {
+    render(<Note {...testNote} handleUpdateText={(uuid: string, newText: string) => {
+      expect(newText).toBe('Some very new text');
       expect(uuid).toBe(testNote.uuid);
     }} handleUpdatePosition={() => {}}/>);
 
-    const noteTextBox = screen.getByRole('textbox');
+    const textContainer = screen.getByText(testNote.text);
 
-    fireEvent.input(noteTextBox, {target: { value: 'Test text' } });
-  })
+    fireEvent.click(textContainer);
+
+    await waitFor(async () => {
+      const textInput = screen.getByRole('textbox');
+      fireEvent.input(textInput, { target: {value: 'Some very new text'}});
+      fireEvent.click(screen.getByRole('button'));
+    });
+  });
 });

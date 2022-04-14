@@ -1,6 +1,6 @@
 import './Note.css';
 import {center} from "../Utils/center";
-import React, {Fragment} from "react";
+import React, {Fragment, useState} from "react";
 
 type NoteProps = {
   text: string,
@@ -10,23 +10,14 @@ type NoteProps = {
   backgroundColor: string,
   userName: string,
   uuid: string,
-  editMode: boolean,
-  handleClick: (uuid: string) => void,
-  handleInput: (newText: string, uuid: string) => void,
+  handleUpdateText: (uuid: string, newText: string) => void,
   handleUpdatePosition: (posX: number, posY: number, uuid: string) => void
 };
 
-export const Note = ({ userName,
-                       text,
-                       posX,
-                       posY,
-                       color,
-                       backgroundColor,
-                       uuid,
-                       editMode,
-                       handleTextUpdate,
-                       handleUpdatePosition
-                     }: NoteProps) => {
+export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, handleUpdateText, handleUpdatePosition}: NoteProps) => {
+  const [noteText, setNoteText] = useState(text);
+  const [editMode, setEditMode] = useState(false);
+
   const noteStyle: React.CSSProperties = {
     position: 'absolute',
     top: posY,
@@ -36,24 +27,29 @@ export const Note = ({ userName,
   }
 
   const handleMove = (event: any) => {
-    const {posX, posY} = center(event.clientX, event.clientY);
+    const {posX, posY} = center(event.screenX, event.screenY);
     handleUpdatePosition(posX, posY, uuid);
   }
 
+  const handleInput = (newText: string) => {
+    setNoteText(newText);
+  }
+
+  const handleDisabeEditMode = () => {
+    setEditMode(false);
+    handleUpdateText(uuid, noteText);
+  }
+
   return (
-    <div
-      draggable={true}
-      style={noteStyle}
-      className='note'
-      onDragEnd={handleMove}
-      onClick={() => handleClick(uuid)}>
+    <div draggable={true} style={noteStyle} className='note' onDragEnd={handleMove} data-testid="note">
       <h2>{userName}</h2>
-      {editMode ? (
-        <Fragment>
-          <textarea autoFocus={true} onInput={(event: any) => handleInput(event.target.value, uuid)} defaultValue={text}/>
-          <button onClick={}>Save</button>
-        </Fragment>
-      ) : text}
+      {editMode
+        ? (
+          <Fragment>
+            <textarea defaultValue={noteText} onInput={(event: any) => handleInput(event.target.value)}/>
+            <button onClick={() => setEditMode(false)}>Save</button>
+          </Fragment>
+        ) : (<div className="note-text" onClick={handleDisabeEditMode}>{noteText}</div>)}
     </div>
   );
 };

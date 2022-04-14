@@ -9,12 +9,11 @@ type WhiteboardProps = {
   name: string,
   notes: TextNote[],
   handleClick: (posX: number, posY: number) => void,
-  handleNoteClick: (uuid: string) => void,
-  handleTextInput: (newText: string, uuid: string) => void,
+  handleTextUpdate: (uuid: string, newText: string) => void,
   handleUpdatePosition: (posX: number, posY: number, uuid: string) => void
 };
 
-export const Whiteboard = ({title, name, notes, handleClick, handleNoteClick, handleTextInput, handleUpdatePosition}: WhiteboardProps) => {
+export const Whiteboard = ({title, name, notes, handleClick, handleTextUpdate, handleUpdatePosition}: WhiteboardProps) => {
   const whiteboardStyle: React.CSSProperties = {
     position: 'relative'
   }
@@ -23,7 +22,6 @@ export const Whiteboard = ({title, name, notes, handleClick, handleNoteClick, ha
     if (event.target.id === 'whiteboard') {
       const {posX, posY} = center(event.clientX, event.clientY);
       handleClick(posX, posY);
-      handleNoteClick('');
     }
   }
 
@@ -34,8 +32,7 @@ export const Whiteboard = ({title, name, notes, handleClick, handleNoteClick, ha
       {notes.map((note: TextNote) => <Note
         {...note}
         key={note.uuid}
-        handleClick={handleNoteClick}
-        handleInput={handleTextInput}
+        handleUpdateText={handleTextUpdate}
         handleUpdatePosition={handleUpdatePosition}
         />
       )}

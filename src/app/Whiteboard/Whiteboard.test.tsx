@@ -14,8 +14,7 @@ describe('Whiteboard', () => {
       name={userName}
       notes={notes}
       handleClick={() => {}}
-      handleNoteClick={() => {}}
-      handleTextInput={() => {}}
+      handleTextUpdate={() => {}}
       handleUpdatePosition={() => {}}
     />);
   const note = (text: string) => screen.getByText(text);
@@ -79,13 +78,13 @@ describe('Whiteboard', () => {
         title={whiteboardTitle}
         name={userName}
         notes={notes}
-        handleNoteClick={() => {}}
         handleClick={(posX, posY) => {
           expect(posX).toBe(0);
           expect(posY).toBe(0);
         }}
         handleUpdatePosition={() => {}}
-        handleTextInput={() => {}}/>
+        handleTextUpdate={() => {}}
+      />
     );
 
     const whiteboard = screen.getByTestId('whiteboard');
@@ -102,11 +101,9 @@ describe('Whiteboard', () => {
         name={userName}
         notes={notes}
         handleClick={() => {}}
-        handleNoteClick={(uuid: string) => {
-          expect(uuid).toBe(notes[0].uuid);
-        }}
+        handleTextUpdate={() => {}}
         handleUpdatePosition={() => {}}
-        handleTextInput={() => {}}/>
+      />
     );
 
     const note = screen.getByText(notes[0].text);
