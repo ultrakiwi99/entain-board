@@ -1,17 +1,10 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
-export const LoginForm = ({ updateName }: { updateName: (name: string) => void }) => {
+export const LoginForm = ({updateName}: { updateName: (name: string) => void }) => {
   const [name, setName] = useState(undefined);
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    if (name) {
-      const result = await fetch('http://localhost:3999/login', {
-        method: 'POST',
-        body: JSON.stringify({ name });
-      });
-      updateName(name);
-    }
+  const handleSubmit = async () => {
+    updateName(name || '');
   };
 
   return (
