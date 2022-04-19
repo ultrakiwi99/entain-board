@@ -5,7 +5,7 @@ export const WhiteboardApp = () => {
   const title = 'Whiteboard';
   const userName = 'Test user';
 
-  useSocketConnection();
+  useSocketConnection(userName);
 
   return <Whiteboard title={title} name={userName} />;
 };

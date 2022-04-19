@@ -19,6 +19,9 @@ const server = app.listen(port, () => {
 const io = new Server(server, { cors: '*' });
 
 io.on('connection', (socket: Socket) => {
-  console.log('Got new connection');
+  const userName = socket.handshake.query.userName || null;
+  console.log('Got connection from: ', userName);
+  
+
   registerNoteHandlers(io, socket, memoryStorage);
 });
