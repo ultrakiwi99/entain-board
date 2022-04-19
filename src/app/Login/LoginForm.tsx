@@ -3,10 +3,10 @@ import {useApiLogin} from "../hooks/useApiLogin";
 
 export const LoginForm = ({updateName}: { updateName: (name: string) => void }) => {
   const [name, setName] = useState(undefined);
-
+  const apiLogin = useApiLogin();
   const handleSubmit = async () => {
     if (name) {
-      const loginSuccess = await useApiLogin(name);
+      const loginSuccess = await apiLogin(name);
       if (loginSuccess) {
         updateName(name || '');
       }

@@ -2,7 +2,7 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {LoginForm} from './LoginForm';
 
 jest.mock("../hooks/useApiLogin", () => ({
-  useApiLogin: () => true
+  useApiLogin: () => () => true
 }));
 
 describe('LoginForm', () => {
