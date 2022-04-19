@@ -4,7 +4,8 @@ import {useApiLogin} from "../hooks/useApiLogin";
 export const LoginForm = ({updateName}: { updateName: (name: string) => void }) => {
   const [name, setName] = useState(undefined);
   const apiLogin = useApiLogin();
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
     if (name) {
       const loginSuccess = await apiLogin(name);
       if (loginSuccess) {
