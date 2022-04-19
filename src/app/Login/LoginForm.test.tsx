@@ -1,6 +1,10 @@
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {LoginForm} from './LoginForm';
 
+jest.mock("../hooks/useApiLogin", () => ({
+  useApiLogin: () => true
+}));
+
 describe('LoginForm', () => {
   it('renders form with user name input and login button', () => {
     render(<LoginForm updateName={(() => {
