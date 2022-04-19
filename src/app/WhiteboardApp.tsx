@@ -2,11 +2,20 @@ import { useState } from 'react';
 import { TextNote } from './models';
 import { randomColor } from './Utils/randomColor';
 import { Whiteboard } from './Whiteboard/Whiteboard';
+import {io} from "socket.io-client";
 
 export const WhiteboardApp = () => {
   const title = "Whiteboard";
   const userName = 'Test user';
   const [notes, setNotes] = useState<TextNote[]>([]);
+
+  const client = io('ws://localhost:4000', {
+    transports: ['websockets']
+  });
+
+  client.on('info', data => console.log(data));
+
+  client.connect();
 
   const addNode = (posX: number, posY: number) => {
     const {backgroundColor, color} = randomColor();

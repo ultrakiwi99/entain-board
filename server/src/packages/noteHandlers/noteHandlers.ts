@@ -8,6 +8,9 @@ const broadcastMassUpdate = (io: Server, storage: DBStorage) => {
 }
 
 export const registerNoteHandlers = (io: Server, socket: Socket, storage: DBStorage) => {
+  console.log('Joined socket: ', socket.id);
+  
+
   socket.join(roomName);
 
   socket.on('updateNote', (data) => {
