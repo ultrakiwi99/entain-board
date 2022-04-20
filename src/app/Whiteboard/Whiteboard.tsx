@@ -8,9 +8,10 @@ import { useNotes } from '../hooks/useNotes';
 type WhiteboardProps = {
   title: string;
   name: string;
+  logoff: () => void;
 };
 
-export const Whiteboard = ({ title, name }: WhiteboardProps) => {
+export const Whiteboard = ({ title, name, logoff }: WhiteboardProps) => {
   const { notes, addNode, updatePosition, updateText } = useNotes();
   const whiteboardStyle: React.CSSProperties = {
     position: 'relative',
@@ -30,8 +31,7 @@ export const Whiteboard = ({ title, name }: WhiteboardProps) => {
       onClick={(event: any) => handleWhiteBoardClick(event)}
       id="whiteboard"
     >
-      <h1>{title}</h1>
-      <section>{name}</section>
+      <h1>{title}  <section>{name} <u onClick={logoff}>Logoff</u></section></h1>
       {notes.map((note: TextNote) => (
         <Note
           {...note}

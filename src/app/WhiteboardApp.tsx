@@ -17,5 +17,5 @@ export const WhiteboardApp = () => {
     return <LoginForm updateName={(name: string) => setUserName(name)} />;
   }
 
-  return <Whiteboard title={title} name={userName} />;
+  return <Whiteboard title={title} name={userName} logoff={() => setUserName(null)} />;
 };

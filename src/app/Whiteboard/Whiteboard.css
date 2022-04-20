@@ -5,16 +5,19 @@
 }
 
 #whiteboard h1 {
-  position: absolute;
-  top: 20px;
-  left: 40%;
-  z-index: -1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-#whiteboard section {
-  position: absolute;
-  top: 30px;
-  right: 100px;
-  z-index: -1;
-  color: grey;
+#whiteboard h1 section {
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin-left: auto;
+  color: gray;
 }
+
+#whiteboard h1 section u {
+  cursor: pointer;
+}
+
