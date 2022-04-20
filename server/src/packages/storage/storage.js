@@ -13,6 +13,7 @@ exports.MemoryStorage = void 0;
 var MemoryStorage = /** @class */ (function () {
     function MemoryStorage() {
         this.notes = [];
+        this.users = new Set();
     }
     MemoryStorage.prototype.createNote = function (note) {
         this.notes = __spreadArray(__spreadArray([], this.notes, true), [note], false);
@@ -22,6 +23,9 @@ var MemoryStorage = /** @class */ (function () {
     };
     MemoryStorage.prototype.updateNote = function (note) {
         this.notes = __spreadArray([], this.notes.map(function (next) { return next.uuid === note.uuid ? note : next; }), true);
+    };
+    MemoryStorage.prototype.addUser = function (name) {
+        this.users.add(name);
     };
     return MemoryStorage;
 }());

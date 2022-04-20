@@ -13,4 +13,5 @@ export interface DBStorage {
   updateNote(note: TextNote): void;
   createNote(note: TextNote): void;
   getAllNotes(): TextNote[];
+  addUser(name: string): void;
 }

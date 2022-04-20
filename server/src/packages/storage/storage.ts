@@ -2,6 +2,7 @@ import {DBStorage, TextNote} from "../../types/types";
 
 export class MemoryStorage implements DBStorage {
   notes: TextNote[] = [];
+  users = new Set();
 
   createNote(note: TextNote): void {
     this.notes = [...this.notes, note];
@@ -13,5 +14,9 @@ export class MemoryStorage implements DBStorage {
 
   updateNote(note: TextNote): void {
     this.notes = [...this.notes.map((next) => next.uuid === note.uuid ? note : next)];
+  }
+
+  addUser(name: string): void {
+    this.users.add(name);
   }
 }

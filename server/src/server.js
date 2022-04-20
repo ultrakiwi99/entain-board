@@ -45,12 +45,18 @@ var app = express();
 var port = 3999;
 var memoryStorage = new storage_1.MemoryStorage();
 app.use(cors());
+app.use(express.json());
 app.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var name;
     return __generator(this, function (_a) {
-        console.log(req.body);
-        // const { name } = JSON.parse(req.body);
-        // console.log('Got login with ', name);
-        res.status(200);
+        name = req.body.name;
+        if (name) {
+            memoryStorage.addUser(name);
+            res.status(200);
+        }
+        else {
+            res.status(400);
+        }
         res.end();
         return [2 /*return*/];
     });

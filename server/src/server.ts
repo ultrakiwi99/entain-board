@@ -12,9 +12,17 @@ const port = 3999;
 const memoryStorage = new MemoryStorage();
 
 app.use(cors());
+app.use(express.json());
 
 app.post('/login', async (req: Request, res: Response) => {
-  res.status(200);
+  const {name} = req.body;
+  if (name) {
+    memoryStorage.addUser(name);
+    res.status(200);
+  } else {
+    res.status(400);
+  }
+
   res.end();
 });
 
