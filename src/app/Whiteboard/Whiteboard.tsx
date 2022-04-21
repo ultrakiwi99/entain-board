@@ -37,7 +37,7 @@ export const Whiteboard = ({ title, name, logoff, notes, addNode, updatePosition
       {notes.map((note: TextNote) => (
           <Note
             currentUser={name}
-            {...note}
+            note={note}
             key={note.uuid}
             handleUpdateText={updateText}
             handleUpdatePosition={updatePosition}

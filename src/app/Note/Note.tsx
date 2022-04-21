@@ -1,21 +1,17 @@
 import './Note.css';
 import {center} from "../Utils/center";
 import React, {Fragment, useState} from "react";
+import {TextNote} from "../models";
 
 type NoteProps = {
-  text: string,
-  posX: number,
-  posY: number,
-  color: string,
-  backgroundColor: string,
+  note: TextNote;
   currentUser: string;
-  userName: string,
-  uuid: string,
   handleUpdateText: (uuid: string, newText: string) => void,
   handleUpdatePosition: (posX: number, posY: number, uuid: string) => void
 };
 
-export const Note = ({userName, currentUser, text, posX, posY, color, backgroundColor, uuid, handleUpdateText, handleUpdatePosition}: NoteProps) => {
+export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}: NoteProps) => {
+  const {posX, posY, color, backgroundColor, uuid, userName,text} = note;
   const [noteText, setNoteText] = useState(text);
   const [editMode, setEditMode] = useState(false);
 
