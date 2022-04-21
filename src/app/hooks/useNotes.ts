@@ -36,28 +36,34 @@ export const useNotes = (name: string | null) => {
   };
 
   const updateText = (uuid: string, newText: string) => {
-    setNotes((notes) => [
-      ...notes.map((note) => {
-        if (note.uuid === uuid) {
-          note.text = newText;
-        }
-        return note;
-      }),
-    ]);
-    sendNotes(notes);
+    setNotes((notes) => {
+      const newNotes = [
+        ...notes.map((note) => {
+          if (note.uuid === uuid) {
+            note.text = newText;
+          }
+          return note;
+        }),
+      ];
+      sendNotes(newNotes);
+      return newNotes;
+    });
   };
 
   const updatePosition = (posX: number, posY: number, uuid: string) => {
-    setNotes((notes) => [
-      ...notes.map((note) => {
-        if (note.uuid === uuid) {
-          note.posX = posX;
-          note.posY = posY;
-        }
-        return note;
-      }),
-    ]);
-    sendNotes(notes);
+    setNotes((notes) => {
+      const newNotes = [
+        ...notes.map((note) => {
+          if (note.uuid === uuid) {
+            note.posX = posX;
+            note.posY = posY;
+          }
+          return note;
+        }),
+      ];
+      sendNotes(newNotes);
+      return newNotes;
+    });
   };
 
   return {
