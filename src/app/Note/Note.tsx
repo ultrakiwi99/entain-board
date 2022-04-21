@@ -8,13 +8,14 @@ type NoteProps = {
   posY: number,
   color: string,
   backgroundColor: string,
+  currentUser: string;
   userName: string,
   uuid: string,
   handleUpdateText: (uuid: string, newText: string) => void,
   handleUpdatePosition: (posX: number, posY: number, uuid: string) => void
 };
 
-export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, handleUpdateText, handleUpdatePosition}: NoteProps) => {
+export const Note = ({userName, currentUser, text, posX, posY, color, backgroundColor, uuid, handleUpdateText, handleUpdatePosition}: NoteProps) => {
   const [noteText, setNoteText] = useState(text);
   const [editMode, setEditMode] = useState(false);
 
@@ -23,7 +24,9 @@ export const Note = ({userName, text, posX, posY, color, backgroundColor, uuid, 
     top: posY,
     left: posX,
     color,
-    backgroundColor
+    backgroundColor,
+    pointerEvents: userName === currentUser ? 'all' : 'none',
+    opacity: userName === currentUser ? 1 : 0.8
   }
 
   const handleMove = (event: any) => {

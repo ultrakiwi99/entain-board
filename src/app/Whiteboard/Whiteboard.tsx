@@ -35,13 +35,14 @@ export const Whiteboard = ({ title, name, logoff, notes, addNode, updatePosition
     >
       <h1>{title}  <section>{name} <u onClick={logoff}>Logoff</u></section></h1>
       {notes.map((note: TextNote) => (
-        <Note
-          {...note}
-          key={note.uuid}
-          handleUpdateText={updateText}
-          handleUpdatePosition={updatePosition}
-        />
-      ))}
+          <Note
+            currentUser={name}
+            {...note}
+            key={note.uuid}
+            handleUpdateText={updateText}
+            handleUpdatePosition={updatePosition}
+          />
+        ))}
     </div>
   );
 };
