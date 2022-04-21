@@ -6,8 +6,8 @@ import {TextNote} from "../models";
 type NoteProps = {
   note: TextNote;
   currentUser: string;
-  handleUpdateText: (uuid: string, newText: string) => void,
-  handleUpdatePosition: (posX: number, posY: number, uuid: string) => void
+  handleUpdateText?: (uuid: string, newText: string) => void,
+  handleUpdatePosition?: (posX: number, posY: number, uuid: string) => void
 };
 
 export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}: NoteProps) => {
@@ -27,7 +27,9 @@ export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}
 
   const handleMove = (event: any) => {
     const {posX, posY} = center(event.screenX, event.screenY);
-    handleUpdatePosition(posX, posY, uuid);
+    if (handleUpdatePosition) {
+      handleUpdatePosition(posX, posY, uuid);
+    }
   }
 
   const handleInput = (newText: string) => {
@@ -36,7 +38,9 @@ export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}
 
   const handleDisableEditMode = () => {
     setEditMode(false);
-    handleUpdateText(uuid, noteText);
+    if (handleUpdateText) {
+      handleUpdateText(uuid, noteText);
+    }
   }
 
   return (
