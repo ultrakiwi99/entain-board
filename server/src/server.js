@@ -68,5 +68,6 @@ var io = new Server(server, { cors: '*' });
 io.on('connection', function (socket) {
     var userName = socket.handshake.query.userName || null;
     console.log('Got connection from: ', userName);
+    socket.emit('updateNotes', JSON.stringify(memoryStorage.getAllNotes()));
     (0, noteHandlers_1.registerNoteHandlers)(io, socket, memoryStorage);
 });

@@ -3,16 +3,18 @@ import { TextNote } from '../models';
 import { Note } from '../Note/Note';
 import './Whiteboard.css';
 import {center} from "../Utils/center";
-import { useNotes } from '../hooks/useNotes';
 
 type WhiteboardProps = {
   title: string;
   name: string;
   logoff: () => void;
+  notes: TextNote[];
+  addNode: (posX: number, posY: number, userName: string) => void;
+  updateText: (uuid: string, newText: string) => void;
+  updatePosition: (posX: number, posY: number, uuid: string) => void;
 };
 
-export const Whiteboard = ({ title, name, logoff }: WhiteboardProps) => {
-  const { notes, addNode, updatePosition, updateText } = useNotes();
+export const Whiteboard = ({ title, name, logoff, notes, addNode, updatePosition, updateText }: WhiteboardProps) => {
   const whiteboardStyle: React.CSSProperties = {
     position: 'relative',
   };

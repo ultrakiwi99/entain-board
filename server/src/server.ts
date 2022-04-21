@@ -36,6 +36,6 @@ io.on('connection', (socket: Socket) => {
   const userName = socket.handshake.query.userName || null;
   console.log('Got connection from: ', userName);
 
-
+  socket.emit('updateNotes', JSON.stringify(memoryStorage.getAllNotes()));
   registerNoteHandlers(io, socket, memoryStorage);
 });

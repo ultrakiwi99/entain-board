@@ -19,4 +19,8 @@ export class MemoryStorage implements DBStorage {
   addUser(name: string): void {
     this.users.add(name);
   }
+
+  updateNotes(notes: TextNote[]) {
+    this.notes = [...notes];
+  }
 }

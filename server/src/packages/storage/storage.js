@@ -27,6 +27,9 @@ var MemoryStorage = /** @class */ (function () {
     MemoryStorage.prototype.addUser = function (name) {
         this.users.add(name);
     };
+    MemoryStorage.prototype.updateNotes = function (notes) {
+        this.notes = __spreadArray([], notes, true);
+    };
     return MemoryStorage;
 }());
 exports.MemoryStorage = MemoryStorage;

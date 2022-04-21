@@ -4,22 +4,23 @@ import {DBStorage, TextNote} from "../../types/types";
 const roomName = 'common';
 
 const broadcastMassUpdate = (io: Server, storage: DBStorage) => {
-  io.to(roomName).emit('updatedNotes', JSON.stringify(storage.getAllNotes()));
+  const notes = storage.getAllNotes();
+  console.log(notes);
+  io.to(roomName).emit('updateNotes', JSON.stringify(storage.getAllNotes()));
 }
 
 export const registerNoteHandlers = (io: Server, socket: Socket, storage: DBStorage) => {
   console.log('Joined socket: ', socket.id);
-  
-
   socket.join(roomName);
-
-  socket.on('updateNote', (data) => {
-    storage.updateNote(data as TextNote);
+  socket.on('updateNotes', (data) => {
+    console.log('Got update notes event from ', socket.id);
+    const notes: TextNote[] = JSON.parse(data);
+    storage.updateNotes(notes);
     broadcastMassUpdate(io, storage);
   });
-
-  socket.on('createNote', (data) => {
-    storage.createNote(data as TextNote);
-    broadcastMassUpdate(io, storage);
-  });
+  socket.on('disconnect', () => {
+    console.log(socket.id, ' disconnected');
+    socket.leave(roomName);
+    socket.disconnect();
+  })
 }
