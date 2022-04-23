@@ -15,7 +15,7 @@ describe('TextNote', () => {
   };
 
   it('renders with passed color', () =>{
-    render(<Note note={testNote} currentUser={testNote.userName} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
+    render(<Note note={testNote} currentUser={testNote.userName} handleUpdateText={() => {}}/>);
 
     const note = screen.getByTestId('note');
 
@@ -26,14 +26,14 @@ describe('TextNote', () => {
 
 
   it('renders with username and text when edit mode is off', () =>{
-    render(<Note currentUser={testNote.userName}  note={testNote} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
+    render(<Note currentUser={testNote.userName}  note={testNote} handleUpdateText={() => {}}/>);
 
     expect(screen.getByText(testNote.userName)).not.toBeNull();
     expect(screen.getByText(testNote.text)).not.toBeNull();
   })
 
   it('renders textarea input when clicked on text container', async () => {
-    render(<Note currentUser={testNote.userName} note={testNote} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
+    render(<Note currentUser={testNote.userName} note={testNote} handleUpdateText={() => {}}/>);
 
     const textContainer = screen.getByText(testNote.text);
 
@@ -44,7 +44,7 @@ describe('TextNote', () => {
   });
 
   it('disables edit mode and updates text in card', async () => {
-    render(<Note note={testNote} currentUser={testNote.userName} handleUpdateText={() => {}} handleUpdatePosition={() => {}}/>);
+    render(<Note note={testNote} currentUser={testNote.userName} handleUpdateText={() => {}}/>);
 
     const textContainer = screen.getByText(testNote.text);
 
@@ -66,7 +66,7 @@ describe('TextNote', () => {
     render(<Note note={testNote} currentUser={testNote.userName} {...testNote} handleUpdateText={(uuid: string, newText: string) => {
       expect(newText).toBe('Some very new text');
       expect(uuid).toBe(testNote.uuid);
-    }} handleUpdatePosition={() => {}}/>);
+    }}/>);
 
     const textContainer = screen.getByText(testNote.text);
 
