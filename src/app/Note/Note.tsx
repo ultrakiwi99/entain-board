@@ -9,11 +9,9 @@ type NoteProps = {
 };
 
 export const Note = ({note, currentUser, handleUpdateText}: NoteProps) => {
-  const {posX, posY, color, backgroundColor, uuid, userName,text} = note;
+  const {posX, posY, color, backgroundColor, uuid, userName, text} = note;
   const [noteText, setNoteText] = useState(text);
   const [editMode, setEditMode] = useState(false);
-  const [moving, setMoving] = useState(false);
-
   const noteStyle: React.CSSProperties = {
     position: 'absolute',
     top: posY,
@@ -23,6 +21,9 @@ export const Note = ({note, currentUser, handleUpdateText}: NoteProps) => {
     pointerEvents: userName === currentUser ? 'all' : 'none',
     opacity: userName === currentUser ? 1 : 0.8
   }
+
+  let offsetX: number;
+  let offsetY: number;
 
   const handleInput = (newText: string) => {
     setNoteText(newText);
@@ -39,30 +40,37 @@ export const Note = ({note, currentUser, handleUpdateText}: NoteProps) => {
     setEditMode(true);
   }
 
-  const handlePointerDown = () => {
-    setMoving(true);
-    console.log('pointer down ', 'moving: ', moving);
+  const move = (event: any) => {
+    const element = event.target;
+    element.style.left = `${event.pageX - offsetX}px`
+    element.style.top = `${event.pageY - offsetY}px`
   }
 
-  const handlePointerUp = () => {
-    setMoving(false);
-    console.log('pointer up ', 'moving: ', moving);
+  const add = (event: any) => {
+    const element = event.target;
+    offsetX = event.clientX - element.getBoundingClientRect().left
+    offsetY = event.clientY - element.getBoundingClientRect().top
+    element.addEventListener('mousemove', move)
+  }
+
+  const remove = (event: any) => {
+    const el = event.target;
+    el.removeEventListener('mousemove', move)
   }
 
   return (
-    <div style={noteStyle}
-         className='note'
-         data-testid="note"
-         onPointerDown={handlePointerDown}
-         onPointerUp={handlePointerUp}>
-      <h2>{userName}</h2>
+    <div style={noteStyle} className='note' data-testid="note" onMouseDown={add} onMouseUp={remove}>
+      <h1>
+        {userName}
+        <button onClick={handleEnableEditMode} style={{pointerEvents: 'all'}}>...</button>
+      </h1>
       {editMode
         ? (
           <Fragment>
             <textarea defaultValue={noteText} onInput={(event: any) => handleInput(event.target.value)}/>
             <button onClick={handleDisableEditMode}>Save</button>
           </Fragment>
-        ) : (<div className="note-text" onClick={handleEnableEditMode}>{noteText}</div>)}
+        ) : (<div className="note-text">{noteText}</div>)}
     </div>
   );
 };

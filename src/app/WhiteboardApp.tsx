@@ -18,7 +18,6 @@ export const WhiteboardApp = () => {
     logoff={() => setUserName(null)}
     notes={notes}
     addNode={addNode}
-    updatePosition={updatePosition}
     updateText={updateText}
   />;
 };
