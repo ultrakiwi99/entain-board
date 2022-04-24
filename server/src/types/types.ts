@@ -11,8 +11,6 @@ export type TextNote = {
 
 export interface DBStorage {
   updateNotes(notes: TextNote[]): void;
-  updateNote(note: TextNote): void;
-  createNote(note: TextNote): void;
   getAllNotes(): TextNote[];
   addUser(name: string): void;
 }

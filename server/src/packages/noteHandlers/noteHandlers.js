@@ -8,8 +8,6 @@ var broadcastMassUpdate = function (io, storage) {
     io.to(roomName).emit('updateNotes', JSON.stringify(storage.getAllNotes()));
 };
 var registerNoteHandlers = function (io, socket, storage) {
-    console.log('Joined socket: ', socket.id);
-    socket.join(roomName);
     socket.on('updateNotes', function (data) {
         console.log('Got update notes event from ', socket.id);
         var notes = JSON.parse(data);
@@ -17,9 +15,10 @@ var registerNoteHandlers = function (io, socket, storage) {
         broadcastMassUpdate(io, storage);
     });
     socket.on('disconnect', function () {
-        console.log(socket.id, ' disconnected');
         socket.leave(roomName);
         socket.disconnect();
     });
+    socket.emit('updateNotes', JSON.stringify(storage.getAllNotes()));
+    socket.join(roomName);
 };
 exports.registerNoteHandlers = registerNoteHandlers;
