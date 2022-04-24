@@ -30,15 +30,11 @@ export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}
     setNoteText(newText);
   }
 
-  const handleDisableEditMode = () => {
+  const disableEdit = () => {
     setEditMode(false);
     if (handleUpdateText) {
       handleUpdateText(uuid, noteText);
     }
-  }
-
-  const handleEnableEditMode = () => {
-    setEditMode(true);
   }
 
   const move = (event: any) => {
@@ -66,16 +62,28 @@ export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}
     <div style={noteStyle} className='note' data-testid="note" onMouseDown={add} onMouseUp={remove}>
       <h1>
         {userName}
-        <button onClick={handleEnableEditMode}>...</button>
+        <button onClick={() => setEditMode(true)}>...</button>
       </h1>
-      {editMode
-        ? (
-          <Fragment>
-            <textarea defaultValue={noteText} onInput={(event: any) => handleInput(event.target.value)}/>
-            <button onClick={handleDisableEditMode}>Save</button>
-          </Fragment>
-        ) : (<div className="note-text">{noteText}</div>)}
+      <NoteTextView
+        noteText={text}
+        editMode={editMode}
+        handleInput={handleInput}
+        disableEdit={disableEdit}/>
     </div>
   );
 };
+
+interface NoteTextView {
+  noteText: string,
+  editMode: boolean,
+  handleInput: (newText: string) => void,
+  disableEdit: () => void
+}
+
+const NoteTextView = ({noteText, handleInput, editMode, disableEdit}: NoteTextView) => editMode
+  ? <Fragment>
+      <textarea defaultValue={noteText} onInput={(event: any) => handleInput(event.target.value)}/>
+      <button onClick={disableEdit}>Save</button>
+    </Fragment>
+  : <div className="note-text">{noteText}</div>;
 
