@@ -30,7 +30,6 @@ export const useSocketConnection = (updateNotes: (notes:TextNote[]) => void) => 
   }
 
   const sendNotes = (notes: TextNote[]) => {
-    console.log(client, notes, 'I sending notes');
     if (client) {
       client.emit('updateNotes', JSON.stringify(notes));
     }

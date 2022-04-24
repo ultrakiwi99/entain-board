@@ -10,6 +10,7 @@ export const LoginForm = ({updateName}: { updateName: (name: string) => void }) 
     if (name) {
       const loginSuccess = await apiLogin(name);
       if (loginSuccess) {
+        localStorage.setItem('entan-board-username', name);
         updateName(name || '');
       }
     }
