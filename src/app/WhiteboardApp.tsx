@@ -19,5 +19,6 @@ export const WhiteboardApp = () => {
     notes={notes}
     addNode={addNode}
     updateText={updateText}
+    updatePosition={updatePosition}
   />;
 };

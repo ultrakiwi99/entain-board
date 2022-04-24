@@ -11,9 +11,10 @@ type WhiteboardProps = {
   notes: TextNote[];
   addNode: (posX: number, posY: number, userName: string) => void;
   updateText: (uuid: string, newText: string) => void;
+  updatePosition: (posX: number, posY: number, uuid: string) => void;
 };
 
-export const Whiteboard = ({title, name, logoff, notes, addNode, updateText}: WhiteboardProps) => {
+export const Whiteboard = ({title, name, logoff, notes, addNode, updateText, updatePosition}: WhiteboardProps) => {
   const handleWhiteBoardClick = (event: any) => {
     if (event.target.id !== 'whiteboard') {
       return;
@@ -36,7 +37,7 @@ export const Whiteboard = ({title, name, logoff, notes, addNode, updateText}: Wh
           <section>{name} <u onClick={logoff}>Logoff</u></section>
         </h1>
         {myNotes.map((note: TextNote) => (
-          <Note currentUser={name} note={note} key={note.uuid} handleUpdateText={updateText}/>
+          <Note currentUser={name} note={note} key={note.uuid} handleUpdateText={updateText} handleUpdatePosition={updatePosition}/>
         ))}
       </div>
     </div>

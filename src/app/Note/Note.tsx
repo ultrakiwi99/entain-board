@@ -6,9 +6,10 @@ type NoteProps = {
   note: TextNote;
   currentUser: string;
   handleUpdateText?: (uuid: string, newText: string) => void;
+  handleUpdatePosition?: (posX: number, posY: number, uuid: string) => void;
 };
 
-export const Note = ({note, currentUser, handleUpdateText}: NoteProps) => {
+export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}: NoteProps) => {
   const {posX, posY, color, backgroundColor, uuid, userName, text} = note;
   const [noteText, setNoteText] = useState(text);
   const [editMode, setEditMode] = useState(false);
@@ -42,20 +43,23 @@ export const Note = ({note, currentUser, handleUpdateText}: NoteProps) => {
 
   const move = (event: any) => {
     const element = event.target;
-    element.style.left = `${event.pageX - offsetX}px`
-    element.style.top = `${event.pageY - offsetY}px`
+    element.style.left = `${event.pageX - offsetX}px`;
+    element.style.top = `${event.pageY - offsetY}px`;
   }
 
   const add = (event: any) => {
     const element = event.target;
-    offsetX = event.clientX - element.getBoundingClientRect().left
-    offsetY = event.clientY - element.getBoundingClientRect().top
-    element.addEventListener('mousemove', move)
+    offsetX = event.clientX - element.getBoundingClientRect().left;
+    offsetY = event.clientY - element.getBoundingClientRect().top;
+    element.addEventListener('mousemove', move);
   }
 
   const remove = (event: any) => {
     const el = event.target;
-    el.removeEventListener('mousemove', move)
+    el.removeEventListener('mousemove', move);
+    if (handleUpdatePosition) {
+      handleUpdatePosition(el.style.left, el.style.top, uuid);
+    }
   }
 
   return (
