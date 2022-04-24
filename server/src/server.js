@@ -12,7 +12,7 @@ var memoryStorage = new storage_1.MemoryStorage();
 app.use(cors());
 app.use(express.json());
 (0, apiRoutes_1.registerApiRoutes)(app, memoryStorage);
-var io = new Server(app.listen(port), { cors: '*' });
+var io = new Server(app.listen(port, function () { return console.log('Server is started on: ', port); }), { cors: '*' });
 io.on('connection', function (socket) {
     var userName = socket.handshake.query.userName || null;
     console.log('Got connection from: ', userName);

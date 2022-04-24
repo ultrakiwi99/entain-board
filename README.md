@@ -25,4 +25,6 @@ npm run start
 ```
 
 Client will be available in browser at localhost:3000. If 3000 port is busy,
-check script output, it proposes alternative port.
+check script output, it proposes alternative port. Application
+uses localstorage for saving username, so use different browsers
+for multi-user testing.
