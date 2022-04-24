@@ -66,7 +66,7 @@ export const Note = ({note, currentUser, handleUpdateText, handleUpdatePosition}
     <div style={noteStyle} className='note' data-testid="note" onMouseDown={add} onMouseUp={remove}>
       <h1>
         {userName}
-        <button onClick={handleEnableEditMode} style={{pointerEvents: 'all'}}>...</button>
+        <button onClick={handleEnableEditMode}>...</button>
       </h1>
       {editMode
         ? (

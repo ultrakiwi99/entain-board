@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 registerApiRoutes(app, memoryStorage);
 
-const io = new Server(app.listen(port), {cors: '*'});
+const io = new Server(app.listen(port, () => console.log('Server is started on: ', port)), {cors: '*'});
 io.on('connection', (socket: Socket) => {
   const userName = socket.handshake.query.userName || null;
   console.log('Got connection from: ', userName);

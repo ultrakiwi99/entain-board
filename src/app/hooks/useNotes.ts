@@ -51,6 +51,10 @@ export const useNotes = (name: string | null) => {
   };
 
   const updatePosition = (posX: number, posY: number, uuid: string) => {
+    // Ignore clicks on buttons edit and save.s
+    if (!posX || !posY) {
+      return;
+    }
     setNotes((notes) => {
       const newNotes = [
         ...notes.map((note) => {
